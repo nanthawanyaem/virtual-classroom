@@ -3539,6 +3539,7 @@ async function uploadFileToDrive(file, subFolder) {
 // ── บันทึก metadata ของชิ้นงานลง Sheet ──
 async function saveMetadata(mesh) {
   const d = mesh.userData;
+  const quiz = quizBank[d.id] ? JSON.stringify(quizBank[d.id]) : '';
   return gasPost({
     action: 'saveMetadata',
     data: {
@@ -3551,7 +3552,8 @@ async function saveMetadata(mesh) {
       fileUrl:  d._cloudUrl || '',
       audioUrl: d._audioUrl || '',
       x: '', y: '', z: '', rx: '', ry: '', rz: '', scale: '',
-      bpm: d._bpm || '', key: d._key || ''
+      bpm: d._bpm || '', key: d._key || '',
+      quizData: quiz
     }
   });
 }
@@ -3588,6 +3590,9 @@ async function loadAll() {
       if (item.audioUrl) {
         mesh.userData._audioUrl = item.audioUrl;
         setArtworkAudio(item.id, item.audioUrl, item.title);
+      }
+      if (item.quizData) {
+        try { quizBank[item.id] = JSON.parse(item.quizData); } catch(e) {}
       }
     });
     console.log('[loadAll] loaded', data.items.length, 'items');
