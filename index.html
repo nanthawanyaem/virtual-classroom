@@ -1787,7 +1787,7 @@ window.closeUploadModal=function(){
   pendingMesh=null; pendingImageDataUrl=null; pendingImageFile=null; pendingAudioDataUrl=null; pendingAudioFile=null;
 };
 
-function loadImageToMesh(mesh, dataUrl){
+function loadImageToMesh(mesh, url){
     // ถ้าเป็น script.google.com ให้ fetch เป็น base64 แล้วแปลงเป็นรูป
   if(url.includes('script.google.com')) {
     fetch(url)
