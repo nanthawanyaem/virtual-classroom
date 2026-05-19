@@ -2276,10 +2276,6 @@ function buildQuizQueue() {
   return q;
 }
 
-function openQuizForArtwork(artworkId) {
-  const qs = quizBank[artworkId];
-  if (!qs || qs.length === 0) return;
-
   // build queue from this artwork first, then rest
 function openQuizForArtwork(artworkId) {
   const qs = quizBank[artworkId];
