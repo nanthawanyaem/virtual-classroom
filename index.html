@@ -3591,6 +3591,7 @@ async function loadAll() {
       if (item.fileUrl)  {
         mesh.userData._existingFileUrl = item.fileUrl;  // ← เพิ่ม
         loadImageToMesh(mesh, item.fileUrl);
+      }
       if (item.audioUrl) {
         mesh.userData._existingAudioUrl = item.audioUrl;  // ← เพิ่ม
         mesh.userData._audioUrl = item.audioUrl;
