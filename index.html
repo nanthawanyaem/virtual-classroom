@@ -3554,7 +3554,10 @@ async function saveMetadata(mesh) {
 
 // ── saveAll — บันทึกทุกชิ้นงานที่ถูก customize ──
 async function saveAll() {
-  const targets = interactables.filter(m => m.userData._customized);
+  // รวมทั้ง customized และมี quiz
+  const targets = interactables.filter(m => 
+    m.userData._customized || quizBank[m.userData.id]?.length > 0
+  );
   if (targets.length === 0) {
     console.log('[saveAll] nothing to save');
     return;
