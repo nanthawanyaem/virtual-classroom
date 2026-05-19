@@ -1882,14 +1882,33 @@ window.removeAudio = function(){
 };
 
 // ─── AUDIO PLAYBACK SYSTEM ─────────────────────────────────────────────────
-function setArtworkAudio(artworkId, dataUrl, fileName){
-  // หยุดเสียงเก่าก่อน
+function setArtworkAudio(artworkId, url, fileName){
   if(artworkAudioMap[artworkId]){
     artworkAudioMap[artworkId].audio.pause();
   }
-  const audio = new Audio(dataUrl);
+
+  // ถ้าเป็น script.google.com ให้ fetch เป็น base64 ก่อน
+  if(url && url.includes('script.google.com')) {
+    fetch(url)
+      .then(r => r.text())
+      .then(base64 => {
+        const dataUrl = 'data:audio/mpeg;base64,' + base64;
+        const audio = new Audio(dataUrl);
+        audio.loop = false;
+        artworkAudioMap[artworkId] = { audio, url, fileName: fileName||'เสียงประกอบ' };
+        audio.addEventListener('ended', () => {
+          if(currentPlayingId === artworkId) currentPlayingId = null;
+          updateAudioHudBtn(artworkId);
+        });
+        updateAudioHudBtn(artworkId);
+      });
+    return;
+  }
+
+  // URL ปกติ หรือ base64 dataUrl
+  const audio = new Audio(url);
   audio.loop = false;
-  artworkAudioMap[artworkId] = { audio, dataUrl, fileName: fileName||'เสียงประกอบ' };
+  artworkAudioMap[artworkId] = { audio, url, fileName: fileName||'เสียงประกอบ' };
   audio.addEventListener('ended', () => {
     if(currentPlayingId === artworkId) currentPlayingId = null;
     updateAudioHudBtn(artworkId);
