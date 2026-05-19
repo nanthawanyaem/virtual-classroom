@@ -3534,6 +3534,11 @@ async function uploadFileToDrive(file, subFolder) {
 async function saveMetadata(mesh) {
   const d = mesh.userData;
   const quiz = quizBank[d.id] ? JSON.stringify(quizBank[d.id]) : '';
+  
+  // ถ้าไม่มี _cloudUrl ใหม่ ให้ดึง fileUrl เดิมจาก Sheet มาใช้แทน
+  const fileUrl = d._cloudUrl || d._existingFileUrl || '';
+  const audioUrl = d._audioUrl || d._existingAudioUrl || '';
+
   return gasPost({
     action: 'saveMetadata',
     data: {
@@ -3543,8 +3548,8 @@ async function saveMetadata(mesh) {
       desc:     d.desc || '',
       artist:   d.artist || '',
       year:     d.year || '',
-      fileUrl:  d._cloudUrl || '',
-      audioUrl: d._audioUrl || '',
+      fileUrl,
+      audioUrl,
       x: '', y: '', z: '', rx: '', ry: '', rz: '', scale: '',
       bpm: d._bpm || '', key: d._key || '',
       quizData: quiz
@@ -3583,8 +3588,11 @@ async function loadAll() {
       if (item.desc)     mesh.userData.desc   = item.desc;
       if (item.artist)   mesh.userData.artist = item.artist;
       if (item.year)     mesh.userData.year   = item.year;
-      if (item.fileUrl)  loadImageToMesh(mesh, item.fileUrl);
+      if (item.fileUrl)  {
+        mesh.userData._existingFileUrl = item.fileUrl;  // ← เพิ่ม
+        loadImageToMesh(mesh, item.fileUrl);
       if (item.audioUrl) {
+        mesh.userData._existingAudioUrl = item.audioUrl;  // ← เพิ่ม
         mesh.userData._audioUrl = item.audioUrl;
         setArtworkAudio(item.id, item.audioUrl, item.title);
       }
