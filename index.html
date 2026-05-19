@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Virtual Museum — พิพิธภัณฑ์เสมือนจริง</title>
+<title>Virtual Museum</title>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body { background: #0a0a0a; overflow: hidden; font-family: 'Georgia', serif; }
@@ -2281,15 +2281,15 @@ function openQuizForArtwork(artworkId) {
   if (!qs || qs.length === 0) return;
 
   // build queue from this artwork first, then rest
-  quizQueue = [
-    ...qs.map((_,i) => ({ artworkId, qIndex: i })),
-    ...buildQuizQueue().filter(e => e.artworkId !== artworkId)
-  ];
+function openQuizForArtwork(artworkId) {
+  const qs = quizBank[artworkId];
+  if (!qs || qs.length === 0) return;
+  // แสดงแค่คำถามของรูปนี้อย่างเดียว
+  quizQueue = qs.map((_,i) => ({ artworkId, qIndex: i }));
   quizCursor  = 0;
   quizScore   = 0;
   quizTotal   = 0;
   quizAnswered = false;
-
   document.getElementById('quiz-modal').classList.add('show');
   document.getElementById('qm-body').style.display = 'block';
   document.getElementById('qm-summary').style.display = 'none';
