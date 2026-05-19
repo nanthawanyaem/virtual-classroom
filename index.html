@@ -2551,16 +2551,14 @@ window.qeDeleteQ = function(qi) {
 };
 
 window.qeSave = function() {
-  // validate: skip empty questions
   for (const [id, qs] of Object.entries(qeDraft)) {
     quizBank[id] = qs.filter(q => q.q.trim() && q.choices.some(c => c.trim()));
   }
-
-  // show save toast
   const t = document.getElementById('qe-saved-toast');
   t.classList.add('show');
   clearTimeout(t._t);
   t._t = setTimeout(() => t.classList.remove('show'), 2000);
+  saveAll();  // ← เพิ่มบรรทัดนี้
 };
 
 // ─── RESIZE ───────────────────────────────────────────────────────────────
