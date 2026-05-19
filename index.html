@@ -3521,9 +3521,9 @@ setTimeout(loadPermanentPaintings, 500);
 // ─── GOOGLE APPS SCRIPT INTEGRATION ─────────────────
 // ═══════════════════════════════════════════════════════
 
-const GAS_READ_URL  =   ''// URL Deploy นักเรียน (GET)
-const GAS_WRITE_URL =  ''// URL Deploy ครู (POST)
-const GAS_SECRET    =  ''// SECRET_KEY ต้องตรงกับใน Apps Script
+const GAS_READ_URL  = 'https://script.google.com/macros/s/AKfycbx-wpUpmORxTl0yuw83usLpfLhDkkuRh9Oh7BAsuAz93sL507-35GzFl9d2Vw6zIYlv/exec';   // URL Deploy นักเรียน (GET)
+const GAS_WRITE_URL = 'https://script.google.com/macros/s/AKfycbxA_tajYqwUbrOPIILC2zwyJNXMcX7kKpi59oUiHBt2gzQlSHccSO3EsxZEJc1DTCQn/exec';   // URL Deploy ครู (POST)
+const GAS_SECRET    = 'virtual-2026';    // SECRET_KEY ต้องตรงกับใน Apps Script
 
 // ── POST helper ──
 async function gasPost(payload) {
